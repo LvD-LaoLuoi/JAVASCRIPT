@@ -40,38 +40,41 @@
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       }
 
-      function displayMatches() {
-        // validate when value is null
-        if (!this.value) {
-          suggestions.innerHTML = `<li>Filter for a city</li> <li>or a state</li>`;
-          return;
-        }
+      // How to add params into addEventListener function. But not used arrow function cause "this"
+      function displayMatches(target) {
+        //why not insert params in return function. Because params parent is not active cause prioritize scope
+        return function () {
+          // validate when value is null
+          if (!this.value) {
+            target.innerHTML = `<li>Filter for a city</li> <li>or a state</li>`;
+            return;
+          }
 
-        const matchArray = findMatches(this.value, cities);
-        const html = matchArray
-          .map((place) => {
-            const regex = new RegExp(this.value, 'gi');
-            const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
-            const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);
+          const matchArray = findMatches(this.value, cities);
+          const html = matchArray
+            .map((place) => {
+              const regex = new RegExp(this.value, 'gi');
+              const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
+              const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);
 
-            return `
-            <li>
-              <span class="name">${cityName}, ${stateName}</span>
-              <span class="population">${numberWithCommas(place.population)}</span>
-            </li>
-          `;
-          })
-          .join('');
+              return `
+              <li>
+                <span class="name">${cityName}, ${stateName}</span>
+                <span class="population">${numberWithCommas(place.population)}</span>
+              </li>
+            `;
+            })
+            .join('');
 
-        //fix it when you can
-        suggestions.innerHTML = html;
+          target.innerHTML = html;
+        };
       }
 
       const searchInput = document.querySelector('.search');
       const suggestions = document.querySelector('.suggestions');
 
-      searchInput.addEventListener('change', displayMatches);
-      searchInput.addEventListener('keyup', displayMatches);
+      searchInput.addEventListener('change', displayMatches(suggestions));
+      searchInput.addEventListener('keyup', displayMatches(suggestions));
     </script>
   </body>
 </html>
