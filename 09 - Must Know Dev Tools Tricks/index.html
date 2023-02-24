@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:," />
+    <title>Must Know Dev Tools Tricks</title>
+  </head>
+  <body>
+    <p onClick="makeGreen()">BREAK DOWN</p>
+
+    <script>
+      const dogs = [
+        { name: 'Snickers', age: 2 },
+        { name: 'hugo', age: 8 },
+      ];
+
+      function makeGreen() {
+        const p = document.querySelector('p');
+        p.style.color = '#BADA55';
+        p.style.fontSize = '50px';
+      }
+
+      // Regular
+      console.log('Hello');
+
+      // Interpolated
+      console.log('Hello I am a %s string!', 'fuck');
+
+      // Styled
+      console.log('%c Hello I am a Bull string!', 'font-size: 20px; background: yellow');
+
+      // warning!
+      console.warn('Oh NO');
+
+      // Error :|
+      console.error('Shit');
+
+      // Info
+      console.info('My information');
+
+      // Testing
+      const p = document.querySelector('p');
+      console.assert(p.classList.contains('ouch'), 'That is Wrong!');
+
+      // clearing
+      console.clear();
+
+      // Viewing DOM Elements
+      console.log(p);
+      console.dir(p);
+      console.clear();
+
+      // Grouping together
+      dogs.forEach((dog) => {
+        console.group(`${dog.name}`);
+        console.log(`This is ${dog.name}`);
+        console.log(`This is ${dog.age}`);
+        console.groupEnd(`${dog.name}`);
+      });
+      // counting
+      console.count('Hoa');
+      console.count('Le Dung');
+      console.count('Hoa');
+      console.count('Hoa');
+
+      // timing
+      console.time('Fetching data');
+      fetch('https://api.github.com/users/wesbos')
+        .then((data) => data.json())
+        .then((data) => {
+          console.timeEnd('Fetching data');
+        });
+
+      // table
+      console.table(dogs);
+    </script>
+  </body>
+</html>
